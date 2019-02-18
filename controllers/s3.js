@@ -8,6 +8,24 @@ AWS.config.update({region: 'eu-central-1'});
 
 const s3 = new AWS.S3();
 
+
+const getObject = (bucket, key) => {
+    return new Promise((resolve, reject) => {
+        const params = {
+            Bucket: bucket,
+            Key: key,
+        };
+
+        s3.getObject(params, (err, data) => {
+            if (err) reject(err);
+            else {
+                resolve(data)
+            }
+        });
+    })    
+}
+
+
 const putObject = (body, bucket, key) => {
     return new Promise((resolve, reject) => {
         const params = {
@@ -26,5 +44,6 @@ const putObject = (body, bucket, key) => {
 }
 
 module.exports = {
-    putObject
+    putObject,
+    getObject
 }
